@@ -1,0 +1,299 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 340 100% 88%;
+    --foreground: 0 0% 0%; /* Changed to black */
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 340 100% 70%; /* Adjusted HSL values for pink */
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 340 100% 70%; /* Adjusted HSL values for pink */
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 340 100% 70%; /* Adjusted HSL values for pink */
+    --primary-foreground: 144.9 80.4% 10%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 340 100% 70%; /* Adjusted HSL values for pink */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-image: url("/cat-pattern.png");
+    background-repeat: repeat;
+    background-size: 300px;
+    background-attachment: fixed;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 107, 157, 0.3);
+    z-index: -1;
+  }
+}
+
+@font-face {
+  font-family: "Handwriting";
+  src: url("/fonts/handwriting.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-handwriting {
+  font-family: "Comic Sans MS", "Chalkboard SE", "Handwriting", cursive;
+}
+
+/* Gradient backgrounds */
+.bg-gradient-pink {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 157, 0.7) 0%,
+    rgba(255, 142, 180, 0.7) 50%,
+    rgba(232, 75, 130, 0.7) 100%
+  );
+}
+
+.bg-gradient-card {
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.7) 0%, rgba(255, 142, 180, 0.7) 100%);
+  backdrop-filter: blur(5px);
+}
+
+/* Section dividers */
+.section-divider {
+  height: 6px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+  margin: 0 auto;
+  width: 80%;
+}
+
+/* Previous pattern-bg class is no longer used */
+.pattern-bg {
+  /* Background is applied to body, so removed here */
+  position: relative;
+}
+
+/* Animations */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* Hover effects */
+.hover-grow {
+  transition: transform 0.3s ease;
+}
+
+.hover-grow:hover {
+  transform: scale(1.05);
+}
+
+.hover-glow {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 15px rgba(255, 142, 180, 0.5);
+  transform: translateY(-3px);
+}
+
+/* Font hierarchy - new styles */
+.title-gradient {
+  background: linear-gradient(to right, #000000, #333333);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.subtitle-style {
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* New heading styles */
+.heading-primary {
+  font-size: 3.5rem;
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.5));
+  color: #000; /* Changed to black */
+}
+
+.heading-primary::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: #000; /* Changed to black */
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.heading-secondary {
+  font-size: 2.25rem;
+  font-weight: 800;
+  \
+  letter-spacing: -00, 0, 0.3;
+  );
+}
+
+.heading-secondary {
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  position: relative;
+  display: inline-block;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.4));
+  color: #000; /* Changed to black */
+}
+
+.heading-tertiary {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+  position: relative;
+  display: inline-block;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.3));
+  color: #000; /* Changed to black */
+}
+
+/* Memecoin special styles */
+.crypto-title {
+  font-family: "Impact", "Arial Black", sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+  position: relative;
+  display: inline-block;
+  color: #000; /* Changed to black */
+}
+
+.crypto-subtitle {
+  font-family: "Arial", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  color: #000; /* Changed to black */
+}
+
+/* Card 3D effect */
+.card-3d {
+  transition: transform 0.3s ease;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px
+    rgba(255, 255, 255, 0.1) inset;
+}
+
+.card-3d:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 1px
+    rgba(255, 255, 255, 0.2) inset;
+}
+
+/* Section background styles */
+.section-content {
+  background-color: rgba(255, 255, 255, 0.8); /* Lighter background */
+  border-radius: 1rem;
+  padding: 2rem;
+  backdrop-filter: blur(5px);
+}
+
+/* Text color classes */
+.text-theme {
+  color: #000; /* Changed to black */
+}
+
+.text-theme-muted {
+  color: rgba(0, 0, 0, 0.8); /* Black with transparency */
+}
