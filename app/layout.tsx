@@ -1,7 +1,7 @@
 import type React from "react"
-import "@/app/globals.css"
+import "../app/globals.css"
 import type { Metadata } from "next"
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "../components/ui/toaster"
 
 export const metadata: Metadata = {
   title: "MEWTUL Presale",
@@ -18,7 +18,6 @@ export const metadata: Metadata = {
       href: "/mewtul-logo.png",
     },
   },
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -39,6 +38,3 @@ export default function RootLayout({
     </html>
   )
 }
-
-
-import './globals.css'
