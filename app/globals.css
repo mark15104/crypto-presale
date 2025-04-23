@@ -221,10 +221,14 @@
 .heading-secondary {
   font-size: 2.25rem;
   font-weight: 800;
-  \
-  letter-spacing: -00, 0, 0.3;
-  );
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  position: relative;
+  display: inline-block;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.4));
+  color: #000;
 }
+
 
 .heading-secondary {
   font-size: 2.25rem;

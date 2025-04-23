@@ -4,7 +4,7 @@ export const tokenConfig = {
   name: "$MEWTUL", // Token name (e.g., $PEPE, $SLOTH, etc.)
   symbol: "MEWTUL", // Token symbol (e.g., PEPE, SLOTH, etc.)
   tokenCA: "0x43DDe507b355B85482304bc4a0E360229B596D11", // Token contract address
-  presaleCA: "0xceA873152972bd9d4420fe79993D96F05aA02aCF", // Presale contract address
+  presaleCA: "0x752ACD6d58424166873e95BD921D8626C2920762", // Presale contract address
 
   // Social media links
   socialLinks: {

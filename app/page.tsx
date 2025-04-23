@@ -2,22 +2,23 @@
 
 import { useEffect, useState, useRef } from "react"
 import Image from "next/image"
-import { ExchangePartners } from "../components/exchange-partners"
-import { HowToBuy } from "../components/how-to-buy"
-import { Tokenomics } from "../components/tokenomics"
-import { Roadmap } from "../components/roadmap"
-import { StickyNotes } from "../components/sticky-notes"
-import { Disclaimer } from "../components/disclaimer"
-import { SocialLinks } from "../components/social-links"
-import { Navigation } from "../components/navigation"
-import { siteConfig } from "../constants/site-config"
-import { tokenConfig } from "../constants/token-config"
-import { CopyButton } from "../components/copy-button"
+import { ExchangePartners } from "@/components/exchange-partners"
+import { HowToBuy } from "@/components/how-to-buy"
+import { Tokenomics } from "@/components/tokenomics"
+import { Roadmap } from "@/components/roadmap"
+import { StickyNotes } from "@/components/sticky-notes"
+import { Disclaimer } from "@/components/disclaimer"
+import { SocialLinks } from "@/components/social-links"
+import { Navigation } from "@/components/navigation"
+import { siteConfig } from "@/constants/site-config"
+import { tokenConfig } from "@/constants/token-config"
+import { CopyButton } from "@/components/copy-button"
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0)
   const heroRef = useRef<HTMLDivElement>(null)
   const mascotRef = useRef<HTMLDivElement>(null)
+
   const [totalRaised, setTotalRaised] = useState<string>("Loading...")
 
   useEffect(() => {
@@ -25,6 +26,7 @@ export default function Home() {
       try {
         const response = await fetch("https://presale-api-2wl9.onrender.com/api/amount?id=008874513cat")
         const data = await response.json()
+        // Convert to number (API response might be a string)
         setTotalRaised(data.amount || 0)
       } catch (error) {
         console.error("Error fetching total raised:", error)
@@ -35,25 +37,31 @@ export default function Home() {
     fetchTotalRaised()
   }, [])
 
+  // Handle scroll event
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY)
     }
+
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // Handle mascot animation
   const handleMascotHover = () => {
     if (mascotRef.current) {
       mascotRef.current.classList.add("animate-bounce")
       setTimeout(() => {
-        mascotRef.current?.classList.remove("animate-bounce")
+        if (mascotRef.current) {
+          mascotRef.current.classList.remove("animate-bounce")
+        }
       }, 1000)
     }
   }
 
   return (
     <div className="flex min-h-screen flex-col">
+      {/* Navigation */}
       <Navigation />
 
       {/* Hero Section */}
@@ -61,7 +69,10 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="section-content">
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-              <div className="flex flex-col justify-center space-y-4 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+              <div
+                className="flex flex-col justify-center space-y-4 animate-fade-in"
+                style={{ animationDelay: "0.2s" }}
+              >
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none crypto-title">
                     {tokenConfig.name}
@@ -74,7 +85,7 @@ export default function Home() {
                       Send your coins to the presale contract address from your personal wallet only!
                     </p>
 
-                    {/* Total Raised */}
+                    {/* Total USDT Raised Box */}
                     <div
                       className="bg-white/20 p-4 rounded-lg border border-pink-300 shadow-md animate-fade-in flex items-center justify-between"
                       style={{ animationDelay: "0.7s" }}
@@ -82,12 +93,16 @@ export default function Home() {
                       <h3 className="font-bold text-lg">Total USDT raised:</h3>
                       <div className="text-2xl font-mono bg-white/30 p-2 rounded-md ml-2">
                         {typeof totalRaised === "number" || !isNaN(Number(totalRaised))
-                          ? Number(totalRaised).toLocaleString()
+                          ? `${
+                              typeof totalRaised === "number"
+                                ? totalRaised.toLocaleString()
+                                : Number(totalRaised).toLocaleString()
+                            }`
                           : totalRaised}
                       </div>
                     </div>
 
-                    {/* Presale CA */}
+                    {/* Presale CA Box */}
                     {tokenConfig.presaleCA && (
                       <div
                         className="bg-white/20 p-4 rounded-lg border border-pink-300 shadow-md animate-fade-in flex items-center justify-between"
@@ -100,7 +115,7 @@ export default function Home() {
                       </div>
                     )}
 
-                    {/* Warning */}
+                    {/* Warning Box */}
                     <div
                       className="bg-yellow-100/70 p-4 rounded-lg border border-yellow-400 shadow-md animate-fade-in"
                       style={{ animationDelay: "1s" }}
@@ -129,6 +144,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
+
                 <div className="animate-fade-in" style={{ animationDelay: "1.4s" }}>
                   <SocialLinks className="text-black" />
                 </div>
@@ -153,20 +169,84 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section Divider */}
       <div className="section-divider"></div>
 
+      {/* Exchange Partners */}
       <ExchangePartners />
+
+      {/* Section Divider */}
       <div className="section-divider"></div>
+
+      {/* About Section */}
+      <section id="about" className="w-full py-12 md:py-24 lg:py-32">
+        <div className="container px-4 md:px-6">
+          <div className="section-content">
+            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
+              {/* Left: Image */}
+              <div className="flex items-center justify-center">
+                <div className="bg-white/30 p-4 rounded-full">
+                  <Image
+                    src="/mewtul-face.png"
+                    alt="Token Character"
+                    width={400}
+                    height={400}
+                    className="rounded-full object-contain animate-pulse-slow"
+                  />
+                </div>
+              </div>
+
+              {/* Right: About Description */}
+              <div className="flex flex-col space-y-6">
+                <div className="space-y-2">
+                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl heading-secondary">
+                    {siteConfig.about.title}
+                  </h2>
+                  <p className="text-theme-muted md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed subtitle-style crypto-subtitle">
+                    {siteConfig.about.description}
+                  </p>
+                </div>
+                <div className="space-y-4 bg-gradient-card p-6 rounded-lg border-2 border-white shadow-glow card-3d">
+                  <p className="text-black">{siteConfig.about.content1}</p>
+                  <p className="text-black">{siteConfig.about.content2}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section Divider */}
+      <div className="section-divider"></div>
+
+      {/* Sticky Notes Section */}
       <StickyNotes />
+
+      {/* Section Divider */}
       <div className="section-divider"></div>
+
+      {/* How to Buy Section */}
       <HowToBuy />
+
+      {/* Section Divider */}
       <div className="section-divider"></div>
+
+      {/* Tokenomics Section */}
       <Tokenomics />
+
+      {/* Section Divider */}
       <div className="section-divider"></div>
+
+      {/* Roadmap Section */}
       <Roadmap />
+
+      {/* Section Divider */}
       <div className="section-divider"></div>
+
+      {/* Disclaimer Section */}
       <Disclaimer />
 
+      {/* Footer */}
       <footer className="w-full py-6 bg-[#FF6B9D]">
         <div className="container px-4 md:px-6">
           <div className="section-content">
@@ -176,7 +256,7 @@ export default function Home() {
                 <span className="text-2xl font-bold crypto-title">{tokenConfig.name}</span>
               </div>
               <SocialLinks className="text-black" />
-              <p className="text-xs text-black/60">{siteConfig.footer?.copyright}</p>
+              <p className="text-xs text-black/60">{siteConfig.footer.copyright}</p>
             </div>
           </div>
         </div>
